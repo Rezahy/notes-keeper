@@ -1,18 +1,21 @@
-import { type FormEvent, useRef } from "react";
+import { type Dispatch, type FormEvent, useRef } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Search } from "lucide-react";
 
-const NotesSearchForm = () => {
+type NotesSearchFormProps = {
+	setSearch: Dispatch<React.SetStateAction<string>>;
+};
+const NotesSearchForm = ({ setSearch }: NotesSearchFormProps) => {
 	const searchRef = useRef<HTMLInputElement | null>(null);
 	const onSubmitHandler = (e: FormEvent) => {
 		e.preventDefault();
-		if (searchRef.current && searchRef.current.value.trim().length > 0) {
-			console.log("called");
+		if (searchRef.current) {
+			setSearch(searchRef.current.value.trim());
 		}
 	};
 	return (
-		<div className="max-w-md mx-auto relative">
+		<div className="max-w-md relative flex-1">
 			<form onSubmit={onSubmitHandler}>
 				<Input
 					placeholder="Search notes ..."
