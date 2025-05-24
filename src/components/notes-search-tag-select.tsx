@@ -36,7 +36,7 @@ const NotesSearchTagSelect = ({
 	}, [allTags, setValue, value]);
 	return (
 		<Select onValueChange={tagOnChangeHandler} value={value}>
-			<SelectTrigger className="min-w-[100px]">
+			<SelectTrigger className="sm:min-w-[100px]">
 				<SelectValue placeholder="Select a tag" />
 			</SelectTrigger>
 			<SelectContent>

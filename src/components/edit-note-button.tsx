@@ -22,7 +22,7 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from "@/components/ui/drawer";
-import { useState, type PropsWithChildren } from "react";
+import { startTransition, useState, type PropsWithChildren } from "react";
 import { ScrollArea } from "./ui/scroll-area";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -67,7 +67,9 @@ const EditNoteButtonDialog = ({
 	});
 	const onSubmit = (values: z.infer<typeof formSchema>) => {
 		const { title, tag, text } = values;
-		editNote(id, title, tag, text, createAt);
+		startTransition(() => {
+			editNote(id, title, tag, text, createAt);
+		});
 		form.reset();
 		setOpen(false);
 		toast.success("note edited successfully");

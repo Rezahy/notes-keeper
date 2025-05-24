@@ -3,6 +3,8 @@ import NotesSearchForm from "@/components/notes-search-form";
 import NotesSearchTagSelect from "@/components/notes-search-tag-select";
 import useNotes from "@/stores/notes";
 import { useMemo, useState } from "react";
+import { motion } from "motion/react";
+import EmptyView from "@/components/empty-view";
 
 const HomePage = () => {
 	const notes = useNotes((state) => state.notes);
@@ -34,7 +36,17 @@ const HomePage = () => {
 					<NotesSearchTagSelect value={tag} setValue={setTag} />
 				</div>
 			</div>
-			<NoteList notes={filteredNotes} />
+			{notes.length > 0 ? (
+				<NoteList notes={filteredNotes} />
+			) : (
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.5 }}
+				>
+					<EmptyView>There isn't any note!</EmptyView>
+				</motion.div>
+			)}
 		</section>
 	);
 };
