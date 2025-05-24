@@ -127,7 +127,7 @@ const ResponsiveAddNoteDialog = ({ children }: PropsWithChildren) => {
 								name="text"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Title</FormLabel>
+										<FormLabel>Text</FormLabel>
 										<FormControl>
 											<Textarea {...field} />
 										</FormControl>
@@ -203,7 +203,7 @@ const ResponsiveAddNoteDialog = ({ children }: PropsWithChildren) => {
 								name="text"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Title</FormLabel>
+										<FormLabel>Text</FormLabel>
 										<FormControl>
 											<Textarea {...field} />
 										</FormControl>
