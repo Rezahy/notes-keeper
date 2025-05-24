@@ -16,6 +16,7 @@ import {
 import { Button } from "./ui/button";
 import { EllipsisVertical, LucideEdit, Trash } from "lucide-react";
 import type { Note } from "@/@types/note";
+import DeleteNoteButton from "./delete-note-button";
 
 type NoteListItemProps = Note;
 const NoteListItem = ({
@@ -42,10 +43,7 @@ const NoteListItem = ({
 								<LucideEdit />
 								Edit
 							</DropdownMenuItem>
-							<DropdownMenuItem>
-								<Trash />
-								Delete
-							</DropdownMenuItem>
+							<DeleteNoteButton id={id} />
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</CardDescription>
