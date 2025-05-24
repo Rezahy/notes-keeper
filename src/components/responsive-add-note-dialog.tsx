@@ -211,7 +211,7 @@ const ResponsiveAddNoteDialog = ({ children }: PropsWithChildren) => {
 									</FormItem>
 								)}
 							/>
-							<DrawerFooter className="pt-2">
+							<DrawerFooter className="pt-2 px-0">
 								<Button>Add</Button>
 								<DrawerClose asChild>
 									<Button variant="outline">Cancel</Button>
