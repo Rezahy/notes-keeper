@@ -24,12 +24,6 @@ import {
 } from "@/components/ui/drawer";
 import { useState, type PropsWithChildren } from "react";
 import { ScrollArea } from "./ui/scroll-area";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "./ui/tooltip";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -42,6 +36,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import useNotes from "@/stores/notes";
+import type { Note } from "@/@types/note";
 import { toast } from "sonner";
 
 const formSchema = z.object({
@@ -50,45 +45,43 @@ const formSchema = z.object({
 	text: z.string().nonempty("The Text field is required"),
 });
 
-const ResponsiveAddNoteDialog = ({ children }: PropsWithChildren) => {
+type EditNoteButtonDialogProps = Note;
+const EditNoteButtonDialog = ({
+	children,
+	id,
+	tag,
+	text,
+	title,
+	createAt,
+}: PropsWithChildren<Omit<EditNoteButtonDialogProps, "updatedAt">>) => {
 	const [open, setOpen] = useState(false);
 	const isDesktop = useMediaQuery("(min-width: 768px)");
-	const addNote = useNotes((state) => state.addNote);
+	const editNote = useNotes((state) => state.editNote);
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			title: "",
-			tag: "",
-			text: "",
+			title,
+			tag,
+			text,
 		},
 	});
 	const onSubmit = (values: z.infer<typeof formSchema>) => {
 		const { title, tag, text } = values;
-		addNote(title, tag, text);
+		editNote(id, title, tag, text, createAt);
 		form.reset();
 		setOpen(false);
-		toast.success("note added successfully");
+		toast.success("note edited successfully");
 	};
 
 	if (isDesktop) {
 		return (
 			<Dialog open={open} onOpenChange={setOpen}>
-				<TooltipProvider>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<DialogTrigger asChild>{children}</DialogTrigger>
-						</TooltipTrigger>
-						<TooltipContent>
-							<p>Add Note</p>
-						</TooltipContent>
-					</Tooltip>
-				</TooltipProvider>
-
+				<DialogTrigger asChild>{children}</DialogTrigger>
 				<DialogContent className="sm:max-w-[425px]">
 					<DialogHeader>
-						<DialogTitle>Add Note</DialogTitle>
+						<DialogTitle>Edit Note</DialogTitle>
 						<DialogDescription>
-							Fill title, tag and text for your note. Click add when you're
+							Edit title, tag and text for your note. Click edit when you're
 							done.
 						</DialogDescription>
 					</DialogHeader>
@@ -139,7 +132,7 @@ const ResponsiveAddNoteDialog = ({ children }: PropsWithChildren) => {
 								<DialogClose asChild>
 									<Button variant="outline">Cancel</Button>
 								</DialogClose>
-								<Button>Add</Button>
+								<Button>Edit</Button>
 							</DialogFooter>
 						</form>
 					</Form>
@@ -149,21 +142,12 @@ const ResponsiveAddNoteDialog = ({ children }: PropsWithChildren) => {
 	}
 	return (
 		<Drawer open={open} onOpenChange={setOpen}>
-			<TooltipProvider>
-				<Tooltip>
-					<TooltipTrigger asChild>
-						<DrawerTrigger asChild>{children}</DrawerTrigger>
-					</TooltipTrigger>
-					<TooltipContent>
-						<p>Add Note</p>
-					</TooltipContent>
-				</Tooltip>
-			</TooltipProvider>
+			<DrawerTrigger asChild>{children}</DrawerTrigger>
 			<DrawerContent className="max-h-[80vh]">
 				<DrawerHeader className="text-left">
-					<DrawerTitle>Add Note</DrawerTitle>
+					<DrawerTitle>Edit Note</DrawerTitle>
 					<DrawerDescription>
-						Fill title, tag and text for your note. Click add when you're done.
+						Edit title, tag and text for your note. Click edit when you're done.
 					</DrawerDescription>
 				</DrawerHeader>
 				<ScrollArea className="max-h-[60vh] overflow-auto">
@@ -212,7 +196,7 @@ const ResponsiveAddNoteDialog = ({ children }: PropsWithChildren) => {
 								)}
 							/>
 							<DrawerFooter className="pt-2">
-								<Button>Add</Button>
+								<Button>Edit</Button>
 								<DrawerClose asChild>
 									<Button variant="outline">Cancel</Button>
 								</DrawerClose>
@@ -224,4 +208,4 @@ const ResponsiveAddNoteDialog = ({ children }: PropsWithChildren) => {
 		</Drawer>
 	);
 };
-export default ResponsiveAddNoteDialog;
+export default EditNoteButtonDialog;

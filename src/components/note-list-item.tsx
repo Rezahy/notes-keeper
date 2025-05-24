@@ -14,9 +14,10 @@ import {
 	DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { EllipsisVertical, LucideEdit, Trash } from "lucide-react";
+import { EllipsisVertical, LucideEdit } from "lucide-react";
 import type { Note } from "@/@types/note";
 import DeleteNoteButton from "./delete-note-button";
+import EditNoteButtonDialog from "./edit-note-button";
 
 type NoteListItemProps = Note;
 const NoteListItem = ({
@@ -39,10 +40,18 @@ const NoteListItem = ({
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent>
-							<DropdownMenuItem>
-								<LucideEdit />
-								Edit
-							</DropdownMenuItem>
+							<EditNoteButtonDialog
+								id={id}
+								title={title}
+								text={text}
+								tag={tag}
+								createAt={createAt}
+							>
+								<DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+									<LucideEdit />
+									Edit
+								</DropdownMenuItem>
+							</EditNoteButtonDialog>
 							<DeleteNoteButton id={id} />
 						</DropdownMenuContent>
 					</DropdownMenu>
