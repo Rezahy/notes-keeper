@@ -1,7 +1,9 @@
 import NoteList from "@/components/note-list";
 import NotesSearchForm from "@/components/notes-search-form";
+import useNotes from "@/stores/notes";
 
 const HomePage = () => {
+	const notes = useNotes((state) => state.notes);
 	return (
 		<section>
 			<header>
@@ -10,7 +12,7 @@ const HomePage = () => {
 				</h1>
 			</header>
 			<NotesSearchForm />
-			<NoteList />
+			<NoteList notes={notes} />
 		</section>
 	);
 };

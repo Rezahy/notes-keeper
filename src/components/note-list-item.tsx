@@ -18,12 +18,19 @@ import { EllipsisVertical, LucideEdit, Trash } from "lucide-react";
 import type { Note } from "@/@types/note";
 
 type NoteListItemProps = Note;
-const NoteListItem = () => {
+const NoteListItem = ({
+	id,
+	tag,
+	text,
+	title,
+	createAt,
+	updatedAt,
+}: NoteListItemProps) => {
 	return (
 		<Card className="gap-4">
 			<CardHeader>
 				<CardDescription className="text-xs flex justify-between items-center">
-					<Badge variant="secondary">Tag</Badge>
+					<Badge variant="secondary">{tag}</Badge>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant="ghost" className="relative left-4">
@@ -42,14 +49,9 @@ const NoteListItem = () => {
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</CardDescription>
-				<CardTitle>Note Title</CardTitle>
+				<CardTitle>{title}</CardTitle>
 			</CardHeader>
-			<CardContent>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam
-				aperiam dicta necessitatibus quaerat tenetur nam, quam, voluptatibus ad
-				atque eaque doloribus officiis nobis molestias laudantium dolorum saepe
-				perferendis impedit corrupti!
-			</CardContent>
+			<CardContent>{text}</CardContent>
 			<CardFooter className="flex justify-between">
 				<span className="text-xs">10 minutes ago</span>
 			</CardFooter>
