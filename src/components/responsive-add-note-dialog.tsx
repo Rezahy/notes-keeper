@@ -41,6 +41,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
+import useNotes from "@/stores/notes";
 
 const formSchema = z.object({
 	title: z.string().nonempty("The Title field is required"),
@@ -49,6 +50,9 @@ const formSchema = z.object({
 });
 
 const ResponsiveAddNoteDialog = ({ children }: PropsWithChildren) => {
+	const [open, setOpen] = useState(false);
+	const isDesktop = useMediaQuery("(min-width: 768px)");
+	const addNote = useNotes((state) => state.addNote);
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -58,10 +62,12 @@ const ResponsiveAddNoteDialog = ({ children }: PropsWithChildren) => {
 		},
 	});
 	const onSubmit = (values: z.infer<typeof formSchema>) => {
+		const { title, tag, text } = values;
+		addNote(title, tag, text);
 		form.reset();
+		setOpen(false);
 	};
-	const [open, setOpen] = useState(false);
-	const isDesktop = useMediaQuery("(min-width: 768px)");
+
 	if (isDesktop) {
 		return (
 			<Dialog open={open} onOpenChange={setOpen}>
