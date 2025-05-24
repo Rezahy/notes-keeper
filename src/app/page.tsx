@@ -44,7 +44,9 @@ const HomePage = () => {
 					animate={{ opacity: 1 }}
 					transition={{ duration: 0.5 }}
 				>
-					<EmptyView>There isn't any note!</EmptyView>
+					<EmptyView>
+						There isn't any note. add notes by click on plus button.
+					</EmptyView>
 				</motion.div>
 			)}
 		</section>
