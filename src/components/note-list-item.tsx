@@ -18,6 +18,7 @@ import { EllipsisVertical, LucideEdit } from "lucide-react";
 import type { Note } from "@/@types/note";
 import DeleteNoteButton from "./delete-note-button";
 import EditNoteButtonDialog from "./edit-note-button";
+import { formatDistanceToNow } from "date-fns";
 
 type NoteListItemProps = Note;
 const NoteListItem = ({
@@ -56,11 +57,19 @@ const NoteListItem = ({
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</CardDescription>
-				<CardTitle>{title}</CardTitle>
+				<CardTitle>
+					<h3>{title}</h3>
+				</CardTitle>
 			</CardHeader>
-			<CardContent>{text}</CardContent>
+			<CardContent className="flex-1">
+				<p>{text}</p>
+			</CardContent>
 			<CardFooter className="flex justify-between">
-				<span className="text-xs">10 minutes ago</span>
+				<span className="text-xs">
+					{formatDistanceToNow(updatedAt, {
+						addSuffix: true,
+					})}
+				</span>
 			</CardFooter>
 		</Card>
 	);
