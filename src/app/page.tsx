@@ -1,3 +1,4 @@
+import NoteList from "@/components/note-list";
 import NotesSearchForm from "@/components/notes-search-form";
 
 const HomePage = () => {
@@ -9,6 +10,7 @@ const HomePage = () => {
 				</h1>
 			</header>
 			<NotesSearchForm />
+			<NoteList />
 		</section>
 	);
 };
